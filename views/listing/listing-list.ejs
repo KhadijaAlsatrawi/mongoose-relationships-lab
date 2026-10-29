@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing List</title>
+</head>
+<body>
+    <%- include('../partials/navbar') %>
+    <h1>Category List</h1>
+    <a href="/listings/new">Create a new listing</a>
+    <% for(let oneListing of listings){ %>
+        <p><a href="/listings/<%= oneListing._id %>"> <%= oneListing.streetAddress %> </a> - <%= oneListing.city %> </p>
+        <p>    Price: <%= oneListing.price %></p>
+</p>
+    <% } %>
+</body>
+</html>
