@@ -7,11 +7,10 @@ const methodOverride = require('method-override')
 const morgan = require('morgan')
 
 const User = require('./models/User')
-const Listing = require('./models/Listing')
 const Review = require('./models/Review')
-const Category = require('./models/Category')
-const { render } = require("ejs")
 
+const categoryRouter = require('./controllers/category-controller')
+const listingRouter = require('./controllers/listing-controller')
 
 // Middleware
 app.use(express.static('public')); //all static files are in the public folder
@@ -44,21 +43,9 @@ app.get('/', (req, res) => {
     res.render('homepage.ejs')
 })
 
-app.get('/categories', async (req, res) => {
-    const allCategories = await Category.find()
-    res.render('category/category-list.ejs', { categories: allCategories })
-})
+app.use('/categories',categoryRouter)
 
-app.get('/categories/new', async (req, res) => {
-    res.render('category/create-category.ejs')
-})
-
-app.post('/categories', async (req, res) => {
-    const createCategory = Category.create({
-        categoryName: req.body.categoryName
-    })
-    res.redirect('/categories')
-})
+app.use('/listings',listingRouter)
 
 app.listen(3000, () => {
     console.log("Listening on port " + 3000)
